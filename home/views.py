@@ -4,8 +4,23 @@ from PIL import Image
 from io import BytesIO
 from pyzbar.pyzbar import decode
 import json
+import os
 
-# Create your views here.
+# Define the path to the JSON file
+JSON_FILE_PATH = "scanned_qr_data.json"
+
+# Create the JSON file if it doesn't exist
+if not os.path.exists(JSON_FILE_PATH):
+    with open(JSON_FILE_PATH, "w") as f:
+        json.dump([], f)
+
+def is_duplicate(data, existing_data):
+    # Check if the data is already present in the existing_data
+    for item in existing_data:
+        if item == data:
+            return True
+    return False
+
 @csrf_exempt
 def scan_qr_code(request):
     if request.method == 'POST':
@@ -27,10 +42,18 @@ def scan_qr_code(request):
                     # For example, save to database or return directly
                     json_data = json.loads(qr_data)
 
-                    # Convert the Python object back to a formatted JSON string
-                    formatted_json_data = json.dumps(json_data, indent=4)
-                    print(formatted_json_data)
-                    return JsonResponse({'qr_data': formatted_json_data})
+                    # Load existing data from the file
+                    with open(JSON_FILE_PATH, "r") as f:
+                        existing_data = json.load(f)
+                    
+                    # Check if the data is a duplicate
+                    if not is_duplicate(json_data, existing_data):
+                        # Append the JSON data to the file
+                        with open(JSON_FILE_PATH, "w") as f:
+                            existing_data.append(json_data)
+                            json.dump(existing_data, f, indent=4)
+
+                    return JsonResponse({'qr_data': json_data})
                 else:
                     return JsonResponse({'error': 'QR code not found or could not be decoded'})
         except Exception as e:

@@ -60,3 +60,27 @@ def scan_qr_code(request):
             return JsonResponse({'error': 'An error occurred while processing the image: {}'.format(str(e))})
     else:
         return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+    
+from django.http import JsonResponse
+import json
+import os
+
+# Define the path to the JSON file
+JSON_FILE_PATH = "scanned_qr_data.json"
+
+@csrf_exempt
+def get_all_data(request):
+    if request.method == 'POST':
+        try:
+            # Check if the JSON file exists
+            if os.path.exists(JSON_FILE_PATH):
+                # Load data from the file
+                with open(JSON_FILE_PATH, "r") as f:
+                    all_data = json.load(f)
+                return JsonResponse({'all_data': all_data})
+            else:
+                return JsonResponse({'error': 'No data available'})
+        except Exception as e:
+            return JsonResponse({'error': 'An error occurred while reading the data from the file: {}'.format(str(e))})
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)

@@ -1,5 +1,6 @@
 import json
 from rest_framework import status
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -25,3 +26,17 @@ def form_data(request):
             return Response({'message': 'Form data saved successfully'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'error': 'Form data is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def status_form(request):
+    if request.method == 'POST':
+        try:
+            with open('form_data.json') as file:
+                data = json.load(file)
+            return Response(data)
+        except FileNotFoundError:
+            return Response({"error": "File not found"}, status=404)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+    else:
+        return Response({"error": "Method not allowed"}, status=405)

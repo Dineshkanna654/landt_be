@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from authentication.views import LoginView
 from home.views import scan_qr_code, get_all_data
+from dash.views import form_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name='login'),
     path('scan-qr/', scan_qr_code, name='scan_qr_code'),
     path('all-qr-data/', get_all_data, name='get_all_data'),
+    path('api/form-data/', form_data, name='form_data'),
 ]

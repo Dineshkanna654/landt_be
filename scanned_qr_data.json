@@ -14,13 +14,6 @@
         "PRICE": "00"
     },
     {
-        "PRODUCT NAME": "Kanna",
-        "PRODUCT TYPE": "hello world",
-        "WEIGHT OF THE PRODUCT": "50 KG",
-        "MANUFACTURING DATE": "23/03/2023",
-        "PRICE": "09"
-    },
-    {
         "PRODUCT NAME": "SHAFT 20X20",
         "PRODUCT TYPE": "AUTOMOBILE",
         "WEIGHT OF THE PRODUCT": "2 KG",
@@ -35,10 +28,10 @@
         "PRICE": "00"
     },
     {
-        "PRODUCT NAME": "SHAFT 20X20",
-        "PRODUCT TYPE": "AUTOMOBILE",
-        "WEIGHT OF THE PRODUCT": "20 KG",
-        "MANUFACTURING DATE": "10/02/2024",
-        "PRICE": "34"
+        "PRODUCT NAME": "Dinesh",
+        "PRODUCT TYPE": "hello kanna",
+        "WEIGHT OF THE PRODUCT": "59 KG",
+        "MANUFACTURING DATE": "01/06/2022",
+        "PRICE": "345"
     }
 ]

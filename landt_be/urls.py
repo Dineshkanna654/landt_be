@@ -19,6 +19,7 @@ from django.urls import path
 from authentication.views import LoginView
 from home.views import scan_qr_code, get_all_data
 from dash.views import form_data, status_form
+from stock_indication.views import product_counts_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,6 @@ urlpatterns = [
     path('all-qr-data/', get_all_data, name='get_all_data'),
     path('api/form-data/', form_data, name='form_data'),
     path('api/get-form-data/', status_form, name='post_user_rating'),
+    path('api/stock-indication/', product_counts_view, name='stock_indication'),
+
 ]

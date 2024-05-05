@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'home',
     'dash',
+    'stock_indication',
 ]
 
 MIDDLEWARE = [

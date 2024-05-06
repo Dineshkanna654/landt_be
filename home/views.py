@@ -14,13 +14,6 @@ if not os.path.exists(JSON_FILE_PATH):
     with open(JSON_FILE_PATH, "w") as f:
         json.dump([], f)
 
-def is_duplicate(data, existing_data):
-    # Check if the data is already present in the existing_data
-    for item in existing_data:
-        if item == data:
-            return True
-    return False
-
 @csrf_exempt
 def scan_qr_code(request):
     if request.method == 'POST':
@@ -46,16 +39,23 @@ def scan_qr_code(request):
                     with open(JSON_FILE_PATH, "r") as f:
                         existing_data = json.load(f)
                     
-                    # Check if the data is a duplicate
-                    if not is_duplicate(json_data, existing_data):
-                        # Append the JSON data to the file
-                        with open(JSON_FILE_PATH, "w") as f:
-                            existing_data.append(json_data)
-                            json.dump(existing_data, f, indent=4)
+ 
+                    # Append the JSON data to the file
+                    with open(JSON_FILE_PATH, "w") as f:
+                        existing_data.append(json_data)
+                        json.dump(existing_data, f, indent=4)
 
                     return JsonResponse({'qr_data': json_data})
                 else:
-                    return JsonResponse({'error': 'QR code not found or could not be decoded'})
+                     # Load existing data from the file
+                    with open(JSON_FILE_PATH, "r") as f:
+                        existing_data = json.load(f)
+                    # Append the JSON data to the file
+                    with open(JSON_FILE_PATH, "w") as f:
+                        existing_data.append({"Color": "Red"})
+                        json.dump(existing_data, f, indent=4)
+              
+                    return JsonResponse({"Color": "Red"})
         except Exception as e:
             return JsonResponse({'error': 'An error occurred while processing the image: {}'.format(str(e))})
     else:
